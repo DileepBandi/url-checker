@@ -1,0 +1,11 @@
+https://www.bbc.co.uk/iplayer
+bad://address
+http://not.exists.bbc.co.uk/
+https://www.bbc.co.uk/notexist
+https://google.com
+http://www.bbc.co.uk/
+https://www.bbc.co.uk/missing/thing
+https://go.dev/dl/
+https://ichef.bbci.co.uk/news/976/cpsprodpb/0DAA/producti
+on/_107889430_kittensthree.jpg
+https://news.ycombinator.com/news
