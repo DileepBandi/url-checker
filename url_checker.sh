@@ -9,11 +9,12 @@ validate_url() {
     fi
 }
 
-# Read input from stdin (piped in from a file or direct input)
-urls=()
-while IFS= read -r url; do
-    urls+=("$url")
-done
+# Read input from a file if provided, otherwise read from stdin
+if [ -n "$1" ]; then
+    urls=$(cat "$1")
+else
+    urls=$(cat)
+fi
 
 # Initialize the JSON output
 output="["
@@ -22,7 +23,7 @@ output="["
 declare -A status_codes
 
 # Iterate over each URL
-for url in "${urls[@]}"; do
+for url in $urls; do
     if validate_url "$url"; then
         start_time=$(date +%s%3N)
         response=$(curl -s -o /dev/null -w "%{http_code},%{size_download},%{time_total},%{date}" "$url" 2>/dev/null)
