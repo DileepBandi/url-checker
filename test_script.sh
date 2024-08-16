@@ -49,7 +49,17 @@ test_url "https://www.bbc.co.uk/iplayer" '{
   "contentLength": 567805,
   "requestDuration": "0ms"
 }'
+# Test invalid URL
+test_url "bad://address" '{
+  "url": "bad://address",
+  "error": "Invalid URL"
+}'
 
+# Test non-existent domain
+test_url "http://not.exists.bbc.co.uk/" '{
+  "url": "http://not.exists.bbc.co.uk/",
+  "statusCode": 504
+}'
 
 
 echo "Finished test_script.sh."  # Debugging output
