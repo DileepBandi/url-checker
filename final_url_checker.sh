@@ -7,8 +7,8 @@ url_regex="^(https?|ftp)://[^\s/$.?#].[^\s]*$"
 declare -A statusCodeCount
 results=()
 
-# Function to validate a URL and get HTTP response details
-validate_url() {
+# Function to process a URL and get HTTP response details
+process_url() {
     local url=$1
 
     if [[ $url =~ $url_regex ]]; then
@@ -25,8 +25,8 @@ validate_url() {
         content_length=${content_length:-0}
         date=${date:-"Thu, 01 Aug 2024 00:00:00 GMT"}
 
-        # Output JSON with HTTP details if valid
-        if [[ "$http_code" =~ ^[0-9]+$ ]]; then
+        # Output JSON based on content length
+        if [[ "$content_length" -gt 0 ]]; then
             echo "{"
             echo "  \"url\": \"$url\","
             echo "  \"statusCode\": $http_code,"
@@ -35,10 +35,12 @@ validate_url() {
             echo "  \"date\": \"$date\""
             echo "}"
         else
-            # Output JSON for invalid response
+            # Output JSON when content length is 0
             echo "{"
             echo "  \"url\": \"$url\","
-            echo "  \"error\": \"Invalid URL\""
+            echo "  \"statusCode\": $http_code,"
+            echo "  \"requestDuration\": \"$request_duration\","
+            echo "  \"date\": \"$date\""
             echo "}"
         fi
     else
@@ -65,7 +67,7 @@ urls=$(cat)
 
 # Main execution
 for url in $urls; do
-    result=$(validate_url "$url")
+    result=$(process_url "$url")
     # Extract status code from result
     statusCode=$(echo "$result" | jq -r '.statusCode // empty')
     # Update status code count
@@ -80,3 +82,4 @@ summary=$(generate_summary)
 
 # Output summary and results as a single valid JSON object
 echo "{\"summary\": $summary, \"results\": $(printf '%s\n' "${results[@]}" | jq -s '.')}"
+
