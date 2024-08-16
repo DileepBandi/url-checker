@@ -11,15 +11,21 @@ results=()
 process_url() {
     local url=$1
 
+    echo "Processing URL: $url" >&2  # Debugging output
+
     if [[ $url =~ $url_regex ]]; then
         # Simulate HTTP response with the mock script (for offline testing)
         response=$(./mock_url.sh "$url")
+        echo "Response received: $response" >&2  # Debugging output
 
         # Extract HTTP response details
         http_code=$(echo "$response" | grep "HTTP/1.1" | awk '{print $2}')
+        echo "HTTP Code: $http_code" >&2  # Debugging output
         content_length=$(echo "$response" | grep -i "Content-Length:" | awk '{print $2}')
+        echo "Content Length: $content_length" >&2  # Debugging output
         request_duration="0ms"  # Mocked value
         date=$(echo "$response" | grep -i "^Date:" | sed 's/Date: //i')
+        echo "Date: $date" >&2  # Debugging output
 
         # Handle cases where headers might be missing
         content_length=${content_length:-0}
@@ -52,6 +58,8 @@ process_url() {
     fi
 }
 
+
+
 # Function to generate summary JSON
 generate_summary() {
     summary="[]"
@@ -63,7 +71,7 @@ generate_summary() {
 }
 
 # Read input URLs from stdin
-urls=$(cat)
+urls=$(cat urls.txt)
 
 # Main execution
 for url in $urls; do
@@ -82,4 +90,3 @@ summary=$(generate_summary)
 
 # Output summary and results as a single valid JSON object
 echo "{\"summary\": $summary, \"results\": $(printf '%s\n' "${results[@]}" | jq -s '.')}"
-
