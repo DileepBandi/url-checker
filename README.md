@@ -1,11 +1,6 @@
 URL Checker Script
 This project provides a Bash script that checks the validity of URLs, retrieves their HTTP response properties, and outputs the results in JSON format. The script can handle a list of URLs, identify invalid URLs, and process HTTP responses, including handling non-responsive requests.
 
-Features
-Input: Accepts a newline-separated list of public web addresses.
-Output: Provides JSON output that includes HTTP status code, content length, request duration, and response date.
-Error Handling: Identifies and reports invalid URLs.
-Summary: Generates a summary of responses grouped by status code.
 Prerequisites
 Before running the scripts, ensure you have the following prerequisites installed:
 
