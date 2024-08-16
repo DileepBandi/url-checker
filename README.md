@@ -14,7 +14,7 @@ Linux/Mac: Bash is installed by default.
 Windows: Install Git Bash or use the Windows Subsystem for Linux (WSL).
 2. jq Command-Line JSON Processor
 Linux: Install via your package manager:
-bash
+
 
 sudo apt-get install jq   # For Debian/Ubuntu-based distributions
 sudo yum install jq       # For CentOS/RHEL
@@ -27,14 +27,14 @@ If using Git Bash: Download the jq Windows binary from the official jq website a
 Installation
 Clone the Repository
 
-bash
+
 
 git clone https://github.com/DileepBandi/url-checker.git
 cd url-checker
 Set Executable Permissions
 Ensure all scripts have executable permissions:
 
-bash
+
 chmod +x final_url_checker.sh
 chmod +x test_script.sh
 chmod +x mock_url.sh
@@ -42,13 +42,13 @@ Usage
 1. Running the URL Checker Script
 To run the URL checker script on a list of URLs:
 
-bash
+
 
 bash final_url_checker.sh
-The script will read URLs from the urls.txt file and output the results in JSON format.
+
 2. Alternative Method Using cat and a Pipe
 If the script is set to read from stdin, you can use:
 
-bash
+
 
 cat urls.txt | bash final_url_checker.sh
